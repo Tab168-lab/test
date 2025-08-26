@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <link rel="stylesheet" href="Style.css">
+  
+</head>
+
+<body>
+<header>
+  <div id="logo" class="media" data-src="logo.png" src="./logo.png"></div>
+
+</header>
+<p>GST Number : 4910487129047124</p>
+<table class="bill-details">
+  <tbody>
+  <tr>
+    <td>Date : <span>1</span></td>
+    <td>Time : <span>2</span></td>
+  </tr>
+  <tr>
+    <td>Table #: <span>3</span></td>
+    <td>Bill # : <span>4</span></td>
+  </tr>
+  <tr>
+    <th class="center-align" colspan="2"><span class="receipt">Original Receipt</span></th>
+  </tr>
+  </tbody>
+</table>
+
+<table class="items" id="table_item">
+  <thead>
+  <tr>
+    <th
+      class="heading name"
+    >
+      Item
+    </th>
+    <th class="heading qty">Qty</th>
+    <th class="heading rate">Rate</th>
+    <th class="heading amount">Amount</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  </tbody>
+</table>
+<section>
+  <p>
+    Paid by : <span>CASH</span>
+  </p>
+  <p style="text-align:center">
+    Thank you for your visit!
+  </p>
+</section>
+<footer style="text-align:center">
+  <p>Technology Partner</p>
+  <p>www.kak.in</p>
+</footer>
+</body>
+<script>
+    let table_item = document.querySelector("#table_item tbody");
+    let select_product_arr = localStorage.getItem('selected_product');
+    select_product_arr =JSON.parse(select_product_arr);
+    console.log(select_product_arr);
+    table_item.innerHTML = '';
+    for (let item of select_product_arr) {
+        console.log(item);
+        let new_tr = document.createElement('tr');
+        new_tr.innerHTML = `
+            <td>${item.value_name}</td>
+            <td>${item.value_quantity}</td>
+            <td class="price">${item.value_price}</td>
+            <td class="price">${(item.value_quantity * item.value_price).toFixed(2)}</td>
+        `;
+        table_item.appendChild(new_tr);
+    }
+    window.print();
+    window.onafterprint = function () {
+        localStorage.removeItem('selected_product'); 
+        window.close();  
+    };
+</script>
+
+
+</html>
